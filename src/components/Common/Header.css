@@ -6,8 +6,9 @@
 }
 .btn{
     background-color: #3026d9;
-    font: #ffffff;
+    color: #ffffff;
 }
 .btn:hover{
-    background-color: #706ad5;
+    background-color: #404040;
+    color: #ffffff;
 }
