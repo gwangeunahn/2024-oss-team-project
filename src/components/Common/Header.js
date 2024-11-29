@@ -14,7 +14,7 @@ export default function Header() {
         <li className="nav-item"><a href="/" className="nav-link">나의 정보</a></li>
       </ul>
       <div className="nav-item col-1">
-        <a href="/" className="btn btn-primary rounded-pill" aria-current="page">로그인</a>
+        <a href="/" className="btn rounded-pill" aria-current="page">로그인</a>
       </div>
     </header>
   )
