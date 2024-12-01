@@ -4,6 +4,9 @@ import './Layout.css';
 import Header from '../Common/Header';
 import Footer from '../Common/Footer'
 import Home from '../Pages/Home';
+import ServiceInfo from '../Pages/ServiceInfo';
+import Graduation from '../Pages/Graduation';
+import MyInfo from '../Pages/MyInfo';
 
 function Layout() {
   return (
@@ -12,6 +15,9 @@ function Layout() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/serviceInfo" element={<ServiceInfo/>} />
+          <Route path="/graduation" element={<Graduation/>} />
+          <Route path="/myInfo" element={<MyInfo/>} />
         </Routes>
       </Router>
       <Footer/>
