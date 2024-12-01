@@ -8,7 +8,7 @@ export default function Header() {
         <span className="fs-2">WanJol</span>
       </a>
       <ul className="nav nav-pills col-7">
-        <li className="nav-item"><a href="/" className="nav-link">서비스 소개</a></li>
+        <li className="nav-item"><a href="/info" className="nav-link">서비스 소개</a></li>
         <li className="nav-item"><a href="/" className="nav-link">졸업 요건</a></li>
         <li className="nav-item"><a href="/" className="nav-link">직업 탐색</a></li>
         <li className="nav-item"><a href="/" className="nav-link">나의 정보</a></li>
