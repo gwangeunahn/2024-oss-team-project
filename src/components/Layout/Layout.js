@@ -9,11 +9,13 @@ import Search from '../Pages/SearchJob';
 import ServiceInfo from '../Pages/ServiceInfo';
 import Graduation from '../Pages/Graduation';
 import MyInfo from '../Pages/MyInfo';
+import Login from '../Pages/Login';
 
 function Layout() {
   return (
     <div className="container">
       <Header/>
+
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,8 +24,10 @@ function Layout() {
           <Route path="/serviceInfo" element={<ServiceInfo/>} />
           <Route path="/graduation" element={<Graduation/>} />
           <Route path="/myInfo" element={<MyInfo/>} />
+          <Route path="/login" element={<Login/>} />
         </Routes>
       </Router>
+
       <Footer/>
     </div>
   )
