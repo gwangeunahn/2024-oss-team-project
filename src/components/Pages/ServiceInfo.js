@@ -1,4 +1,5 @@
 import React from 'react'
+import './PagesCss/ServiceInfo.css';
 import ImgInfo from '../../Img/ImgInfo.jpg'
 
 export default function Info() {
