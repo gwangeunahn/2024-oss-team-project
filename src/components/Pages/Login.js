@@ -21,8 +21,13 @@ export default function Login() {
           </div>
 
           {/* 로그인 버튼 */}
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center p-1">
             <button className="btn w-100">로그인</button>
+          </div>
+          <div className="d-flex justify-content-center p-1">
+            <a href="/signup" className="nav-link w-100">
+              <button className="btn w-100">회원가입</button>
+            </a>
           </div>
         </div>
       </div>

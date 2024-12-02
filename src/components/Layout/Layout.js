@@ -10,6 +10,7 @@ import ServiceInfo from '../Pages/ServiceInfo';
 import Graduation from '../Pages/Graduation';
 import MyInfo from '../Pages/MyInfo';
 import Login from '../Pages/Login';
+import Signup from '../Pages/Signup';
 
 function Layout() {
   return (
@@ -25,6 +26,7 @@ function Layout() {
           <Route path="/graduation" element={<Graduation/>} />
           <Route path="/myInfo" element={<MyInfo/>} />
           <Route path="/login" element={<Login/>} />
+          <Route path="/signup" element={<Signup/>} />
         </Routes>
       </Router>
 
