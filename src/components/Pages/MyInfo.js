@@ -34,7 +34,7 @@ export default function MyInfo() {
             </thead>
             <tbody>
               <tr>
-                <td>총 평점</td>
+                <td>취득 평점</td>
                 <td>120</td>
               </tr>
             </tbody>
