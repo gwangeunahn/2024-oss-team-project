@@ -10,7 +10,7 @@ export default function Header() {
       <ul className="nav nav-pills col-7">
         <li className="nav-item"><a href="/serviceInfo" className="nav-link">서비스 소개</a></li>
         <li className="nav-item"><a href="/graduation" className="nav-link">졸업 요건</a></li>
-        <li className="nav-item"><a href="/" className="nav-link">직업 탐색</a></li>
+        <li className="nav-item"><a href="/search" className="nav-link">직업 탐색</a></li>
         <li className="nav-item"><a href="/myInfo" className="nav-link">나의 정보</a></li>
       </ul>
       <div className="nav-item col-1">
