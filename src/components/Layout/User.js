@@ -1,16 +1,14 @@
-import React from 'react';
+import React from 'react'
 import { Outlet } from 'react-router-dom';
-import Header from '../Common/Header';
 import Footer from '../Common/Footer'
+import HeaderUser from '../Common/HeaderUser';
 
-function Layout() {
+export default function LayoutIn() {
   return (
     <div className="container">
-      <Header/>
-      <Outlet/>
+      <HeaderUser/>
+        <Outlet/>
       <Footer/>
     </div>
   )
 }
-
-export default Layout;

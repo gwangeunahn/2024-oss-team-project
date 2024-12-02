@@ -21,7 +21,7 @@ export default function Login() {
 
       if (matchedStudent) {
         // 성공 시 해당 ID로 이동
-        navigate(`/serviceInfo/${matchedStudent.id}`);
+        navigate(`/User/${matchedStudent.id}`);
       } else {
         // 실패 시 오류 메시지 설정
         setErrorMessage('학번 또는 비밀번호가 일치하지 않습니다.');
