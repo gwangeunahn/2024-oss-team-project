@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 
 export default function SearchJob() {
-  const [jobs, setJobs] = useState([]); // 전체 데이터
-  const [filteredJobs, setFilteredJobs] = useState([]); // 필터링된 데이터
-  const [searchTerm, setSearchTerm] = useState(""); // 검색어
-  const [salaryFilter, setSalaryFilter] = useState(""); // 연봉 필터
+  const [jobs, setJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [salaryFilter, setSalaryFilter] = useState("");
 
   useEffect(() => {
     fetch(
-      "https://www.career.go.kr/cnet/openapi/getOpenApi.json?apiKey=f5b128d18e12675df10d93c07ae8e532&svcType=api&svcCode=JOB"
+      "https://www.career.go.kr/cnet/openapi/getOpenApi.json?apiKey=f5b128d18e12675df10d93c07ae8e532&svcType=api&svcCode=JOB&page=1&perPage=600"
     )
       .then((response) => response.text())
       .then((data) => {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(data, "text/xml");
         const content = xmlDoc.getElementsByTagName("content");
-
-        // XML 데이터를 배열로 변환
         const jobsArray = Array.from(content).map((item) => {
           return {
             job: item.getElementsByTagName("job")[0]?.textContent || "N/A",
@@ -28,15 +26,13 @@ export default function SearchJob() {
         });
 
         setJobs(jobsArray);
-        setFilteredJobs(jobsArray); // 초기 필터링 데이터 설정
+        setFilteredJobs(jobsArray);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   useEffect(() => {
     let filtered = jobs;
-
-    // 검색 필터 적용
     if (searchTerm) {
       filtered = filtered.filter(
         (job) =>
@@ -44,8 +40,6 @@ export default function SearchJob() {
           job.summary.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
-    // 연봉 필터 적용
     if (salaryFilter) {
       filtered = filtered.filter((job) => job.salery.includes(salaryFilter));
     }
@@ -56,8 +50,6 @@ export default function SearchJob() {
   return (
     <div>
       <h1>직업 정보</h1>
-
-      {/* 검색창 및 연봉 필터 */}
       <div style={{ marginBottom: "20px" }}>
         <input
           type="text"
@@ -80,42 +72,40 @@ export default function SearchJob() {
           }}
         >
           <option value="">연봉 필터</option>
-          <option value="3천만원">3천만원 ↑</option>
-          <option value="5천만원">5천만원 ↑</option>
+          <option value="1천만원">1천만원</option>
+          <option value="2천만원">2천만원</option>
+          <option value="3천만원">3천만원</option>
+          <option value="4천만원">4천만원</option>
+          <option value="5천만원">5천만원</option>
         </select>
       </div>
 
-      {/* 직업 리스트 */}
-      <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th>직업</th>
-            <th>요약</th>
-            <th>유사 직업</th>
-            <th>연봉</th>
-            <th>고용 전망</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredJobs.length > 0 ? (
-            filteredJobs.map((job, index) => (
-              <tr key={index}>
-                <td>{job.job}</td>
-                <td>{job.summary}</td>
-                <td>{job.similarJob}</td>
-                <td>{job.salery}</td>
-                <td>{job.possibility}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" style={{ textAlign: "center" }}>
-                검색 조건에 맞는 결과가 없습니다.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div>
+        {filteredJobs.length > 0 ? (
+          filteredJobs.map((job, index) => (
+            <div
+              key={index}
+              style={{
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                padding: "20px",
+                marginBottom: "20px",
+                backgroundColor: "#f9f9f9",
+              }}
+            >
+              <h2 style={{ margin: "0 0 10px" }}>{job.job}</h2>
+              <p><strong>요약:</strong> {job.summary}</p>
+              <p><strong>유사 직업:</strong> {job.similarJob}</p>
+              <p><strong>연봉:</strong> {job.salery}</p>
+              <p><strong>고용 전망:</strong> {job.possibility}</p>
+            </div>
+          ))
+        ) : (
+          <p style={{ textAlign: "center", marginTop: "20px" }}>
+            검색 조건에 맞는 결과가 없습니다.
+          </p>
+        )}
+      </div>
     </div>
   );
 }
