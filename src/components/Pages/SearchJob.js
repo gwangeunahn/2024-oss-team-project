@@ -7,21 +7,32 @@ export default function SearchJob() {
   const [salaryFilter, setSalaryFilter] = useState(""); // 연봉 필터
 
   useEffect(() => {
-    // API에서 데이터 가져오기
     fetch(
-      "https://www.career.go.kr/cnet/openapi/getOpenApi.json?apiKey=f5b128d18e12675df10d93c07ae8e532&svcType=api&svcCode=JOB&responseType=json"
+      "https://www.career.go.kr/cnet/openapi/getOpenApi.json?apiKey=f5b128d18e12675df10d93c07ae8e532&svcType=api&svcCode=JOB"
     )
-      .then((response) => response.json())
+      .then((response) => response.text())
       .then((data) => {
-        if (data && data.dataSearch && data.dataSearch.content) {
-          setJobs(data.dataSearch.content);
-          setFilteredJobs(data.dataSearch.content); // 초기 데이터를 필터링 데이터로 설정
-        }
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data, "text/xml");
+        const content = xmlDoc.getElementsByTagName("content");
+
+        // XML 데이터를 배열로 변환
+        const jobsArray = Array.from(content).map((item) => {
+          return {
+            job: item.getElementsByTagName("job")[0]?.textContent || "N/A",
+            summary: item.getElementsByTagName("summary")[0]?.textContent || "N/A",
+            similarJob: item.getElementsByTagName("similarJob")[0]?.textContent || "N/A",
+            salery: item.getElementsByTagName("salery")[0]?.textContent || "N/A",
+            possibility: item.getElementsByTagName("possibility")[0]?.textContent || "N/A",
+          };
+        });
+
+        setJobs(jobsArray);
+        setFilteredJobs(jobsArray); // 초기 필터링 데이터 설정
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // 검색어 또는 연봉 필터 변경 시 필터링
   useEffect(() => {
     let filtered = jobs;
 
@@ -29,14 +40,14 @@ export default function SearchJob() {
     if (searchTerm) {
       filtered = filtered.filter(
         (job) =>
-          (job.job && job.job.toLowerCase().includes(searchTerm.toLowerCase())) ||
-          (job.summary && job.summary.toLowerCase().includes(searchTerm.toLowerCase()))
+          job.job.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          job.summary.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     // 연봉 필터 적용
     if (salaryFilter) {
-      filtered = filtered.filter((job) => job.salery && job.salery.includes(salaryFilter));
+      filtered = filtered.filter((job) => job.salery.includes(salaryFilter));
     }
 
     setFilteredJobs(filtered);
@@ -46,6 +57,7 @@ export default function SearchJob() {
     <div>
       <h1>직업 정보</h1>
 
+      {/* 검색창 및 연봉 필터 */}
       <div style={{ marginBottom: "20px" }}>
         <input
           type="text"
@@ -59,7 +71,6 @@ export default function SearchJob() {
             marginRight: "20px",
           }}
         />
-        {/* 연봉 필터 Select */}
         <select
           value={salaryFilter}
           onChange={(e) => setSalaryFilter(e.target.value)}
@@ -89,11 +100,11 @@ export default function SearchJob() {
           {filteredJobs.length > 0 ? (
             filteredJobs.map((job, index) => (
               <tr key={index}>
-                <td>{job.job || "N/A"}</td>
-                <td>{job.summary || "N/A"}</td>
-                <td>{job.similarJob || "N/A"}</td>
-                <td>{job.salery || "N/A"}</td>
-                <td>{job.possibility || "N/A"}</td>
+                <td>{job.job}</td>
+                <td>{job.summary}</td>
+                <td>{job.similarJob}</td>
+                <td>{job.salery}</td>
+                <td>{job.possibility}</td>
               </tr>
             ))
           ) : (
