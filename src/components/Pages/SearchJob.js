@@ -5,6 +5,8 @@ export default function SearchJob() {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [salaryFilter, setSalaryFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetch(
@@ -45,7 +47,12 @@ export default function SearchJob() {
     }
 
     setFilteredJobs(filtered);
+    setCurrentPage(1);
   }, [searchTerm, salaryFilter, jobs]);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredJobs.slice(startIndex, startIndex + itemsPerPage);
+  const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
 
   return (
     <div>
@@ -81,8 +88,8 @@ export default function SearchJob() {
       </div>
 
       <div>
-        {filteredJobs.length > 0 ? (
-          filteredJobs.map((job, index) => (
+        {currentItems.length > 0 ? (
+          currentItems.map((job, index) => (
             <div
               key={index}
               style={{
@@ -105,6 +112,37 @@ export default function SearchJob() {
             검색 조건에 맞는 결과가 없습니다.
           </p>
         )}
+      </div>
+
+      {/* 페이지네이션 버튼 */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginTop: "20px",
+          gap: "10px", // 버튼 간 간격
+        }}
+      >
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i + 1)}
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              backgroundColor: currentPage === i + 1 ? "#007bff" : "#f0f0f0",
+              color: currentPage === i + 1 ? "#fff" : "#000",
+              border: "1px solid #ccc",
+              cursor: "pointer",
+              textAlign: "center",
+              fontSize: "14px",
+            }}
+          >
+            {i + 1}
+          </button>
+        ))}
       </div>
     </div>
   );
