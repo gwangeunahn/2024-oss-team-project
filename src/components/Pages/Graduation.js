@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import './PagesCss/Graduation.css';
 
-export default function Graduation({ isLoggedIn }) {
+export default function Graduation() {
   const [credits, setCredits] = useState({
     '신앙 및 세계관': 0,
     '인성 및 리더십': 0,
@@ -15,16 +15,30 @@ export default function Graduation({ isLoggedIn }) {
     '전공': 0,
   });
 
+  const { id } = useParams(); // URL에서 studentId 가져오기
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (isLoggedIn) {
-      // Students API 호출
+    if (!id) {
+      setCredits({
+        '신앙 및 세계관': 0,
+        '인성 및 리더십': 0,
+        '실무영어': 0,
+        '전문교양': 0,
+        'BSM': 0,
+        'ICT융합기초': 0,
+        '자유선택': 0,
+        '전공': 0,
+      });
+    } else {
+      // 학생 정보 가져오기
       axios
-        .get('https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/2') // 특정 학생 ID
+        .get(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/${id}`)
         .then((studentResponse) => {
           const studentData = studentResponse.data;
           const studentSubjects = [];
 
-          // 학기별 과목 리스트 추출
+          // 학생의 수강 과목 추출
           Object.keys(studentData).forEach((key) => {
             if (key.includes('-')) {
               studentData[key].forEach((course) => {
@@ -35,14 +49,13 @@ export default function Graduation({ isLoggedIn }) {
             }
           });
 
-          // Class API 호출
+          // 과목 데이터 가져와서 학점 계산
           axios
             .get('https://672818a9270bd0b975544f0f.mockapi.io/api/v1/class')
             .then((classResponse) => {
               const classData = classResponse.data;
               const calculatedCredits = { ...credits };
 
-              // 학생 과목과 Class API 데이터 비교
               classData.forEach((course) => {
                 if (studentSubjects.includes(course.name.trim())) {
                   if (calculatedCredits[course.type]) {
@@ -63,7 +76,7 @@ export default function Graduation({ isLoggedIn }) {
           console.error('Error fetching student data:', error);
         });
     }
-  }, [isLoggedIn]);
+  }, [id]);
 
   return (
     <div className="container mt-5">
@@ -79,7 +92,7 @@ export default function Graduation({ isLoggedIn }) {
             </tr>
           </thead>
           <tbody>
-            {[
+            {[ 
               { type: '신앙 및 세계관', criteria: 9 },
               { type: '인성 및 리더십', criteria: 6 },
               { type: '실무영어', criteria: 9 },
