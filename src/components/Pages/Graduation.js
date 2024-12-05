@@ -44,7 +44,7 @@ export default function Graduation({ isLoggedIn }) {
 
               // 학생 과목과 Class API 데이터 비교
               classData.forEach((course) => {
-                if (studentSubjects.includes(course.name)) {
+                if (studentSubjects.includes(course.name.trim())) {
                   if (calculatedCredits[course.type]) {
                     calculatedCredits[course.type] += course.credit;
                   } else {
