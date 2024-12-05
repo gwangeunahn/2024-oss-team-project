@@ -144,7 +144,7 @@ export default function Graduation() {
       {/* 선택된 과목의 상세 정보를 표시 */}
       {selectedType && (
         <div className="mt-4 col-10 mx-auto">
-          <h3>{selectedType} - 상세 정보</h3>
+          <h3>{selectedType} - 강의 목록</h3>
           <div className="table-responsive">
             <table className="table table-bordered text-center">
               <thead className="table-light">
