@@ -9,8 +9,9 @@ import ServiceInfo from './components/Pages/ServiceInfo';
 import Graduation from './components/Pages/Graduation';
 import MyInfo from './components/Pages/MyInfo';
 import Login from './components/Pages/Login';
-import Signup from './components/Pages/Signup';
+import Signup from './components/Pages/UserCRUD/Signup';
 import User from './components/Layout/User';
+import UpdateInfo from './components/Pages/UserCRUD/UpdateInfo';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="serviceInfo/:id" element={<ServiceInfo/>} />
           <Route path="graduation/:id" element={<Graduation/>} />
           <Route path="myInfo/:id" element={<MyInfo/>} />
+          <Route path="updateInfo/:id" element={<UpdateInfo/>} />
         </Route>
       </Routes>
     </Router>

@@ -61,16 +61,16 @@ export default function Signup() {
           ...serializedSemesters,
         }
       );
-      alert('데이터가 성공적으로 저장되었습니다!');
+      alert('회원가입이 완료 되었습니다.');
       navigate('/login');
     } catch (error) {
       console.error('Error:', error);
-      alert('데이터 저장 중 문제가 발생했습니다.');
+      alert('죄송합니다. 문제가 발생했습니다.');
     }
   };
 
   return (
-    <div>
+    <div className='d-flex justify-content-center'>
       <div className="col-md-7">
         <h4 className="mb-3">회원가입</h4>
         <form onSubmit={handleSubmit}>
@@ -86,7 +86,7 @@ export default function Signup() {
                 onChange={(e) => setStudentNumber(e.target.value)}
                 required
               />
-              <div className="invalid-feedback">Your student number is required.</div>
+              <div className="invalid-feedback">학번을 입력해주세요.</div>
             </div>
 
             <div className="col-sm-6">
@@ -100,7 +100,7 @@ export default function Signup() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <div className="invalid-feedback">Your password is required.</div>
+              <div className="invalid-feedback">비밀번호를 입력해주세요.</div>
             </div>
 
             <div className="accordion" id="semesterAccordion">
@@ -197,7 +197,7 @@ export default function Signup() {
             <hr className="my-4" />
 
             <button className="w-100 btn btn-primary btn-lg" type="submit">
-              가입
+              가입하기
             </button>
           </div>
         </form>
