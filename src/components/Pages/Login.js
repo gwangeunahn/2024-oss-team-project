@@ -21,14 +21,14 @@ export default function Login() {
 
       if (matchedStudent) {
         // 성공 시 해당 ID로 이동
-        navigate(`/user/${matchedStudent.id}`);
+        navigate(`/User/${matchedStudent.id}`);
       } else {
         // 실패 시 오류 메시지 설정
         setErrorMessage('학번 또는 비밀번호가 일치하지 않습니다.');
       }
     } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('오류가 발생했습니다.');
+      console.error('로그인 중 오류가 발생했습니다:', error);
+      setErrorMessage('서버와의 통신에 문제가 발생했습니다.');
     }
   };
 

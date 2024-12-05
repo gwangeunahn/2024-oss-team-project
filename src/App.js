@@ -3,7 +3,7 @@ import './App.css';
 import Layout from './components/Layout/Layout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Pages/Home';
-import Calculate from './components/Pages/Calculate';
+import Detail from './components/Pages/Detail';
 import Search from './components/Pages/SearchJob';
 import ServiceInfo from './components/Pages/ServiceInfo';
 import Graduation from './components/Pages/Graduation';
@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout/>} >
           <Route path="/" element={<Home />} />
-          <Route path='/calculate' element={<Calculate />} />
+          <Route path='/detail/:type' element={<Detail />} />
           <Route path='/search' element={<Search />} />
           <Route path="/serviceInfo" element={<ServiceInfo/>} />
           <Route path="/graduation" element={<Graduation/>} />
@@ -31,7 +31,7 @@ function App() {
         </Route>
         <Route path="/user" element={<User/>} >
           <Route path=":id" element={<Home />} />
-          <Route path='calculate/:id' element={<Calculate />} />
+          <Route path='detail/:id' element={<Detail />} />
           <Route path='search/:id' element={<Search />} />
           <Route path="serviceInfo/:id" element={<ServiceInfo/>} />
           <Route path="graduation/:id" element={<Graduation/>} />
