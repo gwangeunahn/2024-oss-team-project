@@ -12,6 +12,7 @@ import Login from './components/Pages/Login';
 import Signup from './components/Pages/UserCRUD/Signup';
 import User from './components/Layout/User';
 import UpdateInfo from './components/Pages/UserCRUD/UpdateInfo';
+import DeleteInfo from './components/Pages/UserCRUD/DeleteInfo';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="graduation/:id" element={<Graduation/>} />
           <Route path="myInfo/:id" element={<MyInfo/>} />
           <Route path="updateInfo/:id" element={<UpdateInfo/>} />
+          <Route path="deleteInfo/:id" element={<DeleteInfo/>} />
         </Route>
       </Routes>
     </Router>

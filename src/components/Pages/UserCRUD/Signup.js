@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -53,8 +54,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const serializedSemesters = serializeSemesters(data);
-      await axios.post(
-        'https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students',
+      await axios.post('https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students',
         {
           studentNumber,
           password,

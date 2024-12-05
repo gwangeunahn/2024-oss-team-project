@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,7 +19,7 @@ export default function UpdateInfo() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/${id}`);
+        const response = await axios.get('https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/'+id);
         const { studentNumber, password, ...semesters } = response.data;
 
         setStudentNumber(studentNumber);

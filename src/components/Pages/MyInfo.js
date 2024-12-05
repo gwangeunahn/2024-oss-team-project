@@ -45,8 +45,9 @@ export default function MyInfo() {
     <div className="container mt-5">
       {/* 제목과 수정하기 버튼 */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h3 className="mb-0">나의 정보</h3>
-        <a href={"/user/updateInfo/"+id} className="nav-link">수정하기</a>
+        <h3 className="mb-0 col-10">나의 정보</h3>
+        <a href={"/user/updateInfo/"+id} className="nav-link col-1">수정하기</a>
+        <a href={"/user/deleteInfo/"+id} className="nav-link col-1">탈퇴하기</a>
       </div>
 
       {/* 기본 정보 테이블 */}
