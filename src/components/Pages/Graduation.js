@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './PagesCss/Graduation.css';
 
 export default function Graduation() {
@@ -15,8 +15,9 @@ export default function Graduation() {
     '전공': 0,
   });
 
+  const [selectedType, setSelectedType] = useState(null); // 클릭된 항목의 상세 정보 상태
+  const [classDetails, setClassDetails] = useState([]); // 선택된 항목에 대한 수업 정보
   const { id } = useParams(); // URL에서 studentId 가져오기
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!id) {
@@ -78,6 +79,19 @@ export default function Graduation() {
     }
   }, [id]);
 
+  // 과목 클릭 시 상세 정보 표시
+  const handleDetailClick = (type) => {
+    setSelectedType(type);
+    axios
+      .get(`https://672818a9270bd0b975544f0f.mockapi.io/api/v1/class?type=${encodeURIComponent(type)}`)
+      .then((response) => {
+        setClassDetails(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching class details:', error);
+      });
+  };
+
   return (
     <div className="container mt-5">
       <div className="table-responsive col-10 mx-auto rounded-3">
@@ -104,9 +118,12 @@ export default function Graduation() {
             ].map((category, index) => (
               <tr key={index}>
                 <td className="fw-bold">
-                  <Link to={`/detail/${category.type}`} className="text-decoration-none">
+                  <span 
+                    style={{ color: '#3026d9', cursor: 'pointer' }} 
+                    onClick={() => handleDetailClick(category.type)}
+                  >
                     {category.type}
-                  </Link>
+                  </span>
                 </td>
                 <td>{category.criteria}</td>
                 <td>{credits[category.type] || 0}</td>
@@ -123,6 +140,39 @@ export default function Graduation() {
           </tbody>
         </table>
       </div>
+
+      {/* 선택된 과목의 상세 정보를 표시 */}
+      {selectedType && (
+        <div className="mt-4 col-10 mx-auto">
+          <h3>{selectedType} - 상세 정보</h3>
+          <div className="table-responsive">
+            <table className="table table-bordered text-center">
+              <thead className="table-light">
+                <tr>
+                  <th>강의명</th>
+                  <th>학점</th>
+                  <th>전공</th>
+                </tr>
+              </thead>
+              <tbody>
+                {classDetails.length > 0 ? (
+                  classDetails.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.name}</td>
+                      <td>{item.credit}</td>
+                      <td>{item.major}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3">해당 항목에 대한 정보가 없습니다.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
