@@ -21,13 +21,13 @@ export default function DeleteInfo() {
               alert('오류가 발생했습니다.');
             }
           } else {
-            navigate('/user/myInfo/' + id); // 취소 시 정보 페이지로 돌아감
+            navigate('/user/myInfo/' + id);
           }
         };
         
-        userDelete(); // 페이지 로드 시 바로 삭제 확인
+        userDelete();
         
-      }, [id, navigate]); // id와 navigate가 변경되면 이 effect가 실행됨
+      }, [id, navigate]);
 
   return (
     <div>DeleteInfo</div>
