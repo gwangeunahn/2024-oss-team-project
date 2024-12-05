@@ -19,7 +19,7 @@ export default function Graduation({ isLoggedIn }) {
     if (isLoggedIn) {
       // Students API 호출
       axios
-        .get('https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/2') // 특정 학생 ID
+        .get('https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/2')
         .then((studentResponse) => {
           const studentData = studentResponse.data;
           const studentSubjects = [];
