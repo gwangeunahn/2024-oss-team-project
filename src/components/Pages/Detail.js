@@ -46,7 +46,7 @@ export default function Detail() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3">해당 항목에 대한 정보가 없습니다.</td>
+                  <td colSpan="3"> 해당 항목에 대한 정보가 없습니다 </td>
                 </tr>
               )}
             </tbody>
