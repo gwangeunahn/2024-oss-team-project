@@ -9,6 +9,21 @@ export default function MyInfo() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const userDelete = async () => {
+    const isConfirmed = window.confirm('정말로 탈퇴하시겠습니까?');
+  
+    if (isConfirmed) {
+      try {
+        await axios.delete('https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/'+id);
+        alert('탈퇴되었습니다.');
+        navigate('/');
+      } catch (error) {
+        console.error('Error:', error);
+        alert('오류가 발생했습니다.');
+      }
+    }
+  };
+
   useEffect(() => {
     if (!id) {
       alert("로그인을 해주세요.");
@@ -47,7 +62,7 @@ export default function MyInfo() {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h3 className="mb-0 col-10">나의 정보</h3>
         <a href={"/user/updateInfo/"+id} className="nav-link col-1">수정하기</a>
-        <a href={"/user/deleteInfo/"+id} className="nav-link col-1">탈퇴하기</a>
+        <a className="nav-link col-1" href="javascript:;" onClick={userDelete}>탈퇴하기</a>
       </div>
 
       {/* 기본 정보 테이블 */}
