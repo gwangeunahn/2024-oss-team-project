@@ -155,12 +155,12 @@ export default function UpdateInfo() {
                     id={`collapseYear${year}`}
                     className="accordion-collapse collapse show"
                     aria-labelledby={`headingYear${year}`}
-                    data-bs-parent="#semesterAccordion"
                   >
                     <div className="accordion-body">
                       <div className="row">
                         {[1, 2].map((semester) => (
                           <div className="col-6" key={semester}>
+                            <h5>{`${year}학년 ${semester}학기 상세 정보`}</h5>
                             <table className="table table-bordered text-center">
                               <thead className="table-light">
                                 <tr>
