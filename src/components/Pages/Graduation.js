@@ -102,11 +102,10 @@ export default function Graduation() {
               <th style={{ backgroundColor: '#3026d9', color: '#ffffff' }}>졸업기준(설계)</th>
               <th style={{ backgroundColor: '#3026d9', color: '#ffffff' }}>취득학점(설계)</th>
               <th style={{ backgroundColor: '#3026d9', color: '#ffffff' }}>판정</th>
-              <th style={{ backgroundColor: '#3026d9', color: '#ffffff' }}>비고</th>
             </tr>
           </thead>
           <tbody>
-            {[ 
+            {[
               { type: '신앙 및 세계관', criteria: 9 },
               { type: '인성 및 리더십', criteria: 6 },
               { type: '실무영어', criteria: 9 },
@@ -118,8 +117,8 @@ export default function Graduation() {
             ].map((category, index) => (
               <tr key={index}>
                 <td className="fw-bold">
-                  <span 
-                    style={{ color: '#3026d9', cursor: 'pointer' }} 
+                  <span
+                    style={{ color: '#3026d9', cursor: 'pointer' }}
                     onClick={() => handleDetailClick(category.type)}
                   >
                     {category.type}
@@ -128,13 +127,12 @@ export default function Graduation() {
                 <td>{category.criteria}</td>
                 <td>{credits[category.type] || 0}</td>
                 <td>
-                  <i
-                    className={`bi bi-${
-                      credits[category.type] >= category.criteria ? 'check' : 'x'
-                    }-circle-fill text-${credits[category.type] >= category.criteria ? 'success' : 'danger'}`}
-                  ></i>
+                  {credits[category.type] >= category.criteria ? (
+                    <span className="text-success fw-bold">합격</span>
+                  ) : (
+                    <span className="text-danger fw-bold">불합격</span>
+                  )}
                 </td>
-                <td>필요 추가 설명</td>
               </tr>
             ))}
           </tbody>

@@ -31,9 +31,7 @@ export default function MyInfo() {
     }else{  // 데이터 가져오기
       const fetchData = async () => {
         try {
-          const response = await axios.get(
-            `https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/`+id
-          );
+          const response = await axios.get(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/`+id);
           setUserInfo(response.data);
         } catch (error) {
           console.error('Error:', error);
