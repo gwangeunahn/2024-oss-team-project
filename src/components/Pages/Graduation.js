@@ -109,7 +109,7 @@ export default function Graduation() {
               { type: '인성 및 리더십', criteria: 6 },
               { type: '실무영어', criteria: 9 },
               { type: '전문교양', criteria: 5 },
-              { type: 'BSM', criteria: 10 },
+              { type: 'BSM', criteria: 18 },
               { type: 'ICT융합기초', criteria: 2 },
               { type: '자유선택', criteria: 21 },
               { type: '전공', criteria: 60 },
