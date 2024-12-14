@@ -15,9 +15,9 @@ export default function Graduation() {
     '전공': 0,
   });
 
-  const [selectedType, setSelectedType] = useState(null); // 클릭된 항목의 상세 정보 상태
-  const [classDetails, setClassDetails] = useState([]); // 선택된 항목에 대한 수업 정보
-  const { id } = useParams(); // URL에서 studentId 가져오기
+  const [selectedType, setSelectedType] = useState(null);
+  const [classDetails, setClassDetails] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
     if (!id) {
@@ -113,8 +113,8 @@ export default function Graduation() {
               { type: '전문교양', criteria: 5 },
               { type: 'BSM', criteria: 10 },
               { type: 'ICT융합기초', criteria: 2 },
-              { type: '자유선택', criteria: 9 },
-              { type: '전공', criteria: 12 },
+              { type: '자유선택', criteria: 21 },
+              { type: '전공', criteria: 66 },
             ].map((category, index) => (
               <tr key={index}>
                 <td className="fw-bold">

@@ -12,8 +12,8 @@ export default function MyInfo() {
   useEffect(() => {
     if (!id) {
       alert("로그인을 해주세요.");
-      navigate("/"); // home 페이지로 리디렉션
-    }else{  // 데이터 가져오기
+      navigate("/login");
+    }else{
       const fetchData = async () => {
         try {
           const response = await axios.get(
