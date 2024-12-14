@@ -81,7 +81,7 @@ export default function MyInfo() {
           const calculatedGpa = calculateGPA(studentData);
           setGpa(calculatedGpa);
         } catch (error) {
-          console.error("useEffect error :", error);
+          console.error("useEffect error : ", error);
         }
       };
       fetchData();
