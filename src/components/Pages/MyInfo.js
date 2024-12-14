@@ -62,7 +62,7 @@ export default function MyInfo() {
     if (!id) {
       alert("로그인을 해주세요.");
       navigate("/login");
-    } else {
+    }else{
       const fetchData = async () => {
         try {
           const [studentResponse, classResponse] = await Promise.all([
