@@ -29,7 +29,7 @@ export default function MyInfo() {
         alert("탈퇴되었습니다.");
         navigate("/");
       } catch (error) {
-        console.error("Error:", error);
+        console.error("userDelete :", error);
         alert("죄송합니다. 잠시 후 시도해주세요.");
       }
     }
@@ -81,7 +81,7 @@ export default function MyInfo() {
           const calculatedGpa = calculateGPA(studentData);
           setGpa(calculatedGpa);
         } catch (error) {
-          console.error("Error fetching data:", error);
+          console.error("useEffect error : ", error);
         }
       };
       fetchData();
