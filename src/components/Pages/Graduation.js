@@ -112,7 +112,7 @@ export default function Graduation() {
               { type: 'BSM', criteria: 10 },
               { type: 'ICT융합기초', criteria: 2 },
               { type: '자유선택', criteria: 21 },
-              { type: '전공', criteria: 66 },
+              { type: '전공', criteria: 60 },
             ].map((category, index) => (
               <tr key={index}>
                 <td className="fw-bold">

@@ -30,24 +30,24 @@ export default function MyInfo() {
         navigate("/");
       } catch (error) {
         console.error("Error:", error);
-        alert("죄송합니다. 잠시후 시도해주세요.");
+        alert("죄송합니다. 잠시 후 시도해주세요.");
       }
     }
   };
 
   const calculateGPA = (semesters) => {
-    if (!classes.length) return null;
     let totalPoints = 0;
     let totalCredits = 0;
 
-    Object.keys(semesters).forEach((key) => {
-      const semesterSubjects = semesters[key];
+    Object.entries(semesters).forEach(([key, semesterSubjects]) => {
       if (!Array.isArray(semesterSubjects)) return;
 
       semesterSubjects.forEach((subject) => {
-        const subjectName = subject.subject.replace(/\s/g, ""); // 공백 제거
-        const classData = classes.find((cls) => cls.name.replace(/\s/g, "") === subjectName);
-        if (classData) {
+        const cleanedSubjectName = subject.subject.replace(/\s/g, ""); // 공백 제거
+        const classData = classes.find((cls) => cls.name.replace(/\s/g, "") === cleanedSubjectName);
+
+        // 학점이 "P"인 경우 계산에서 제외
+        if (classData && subject.grade !== "P") {
           const gradePoint = gradeToPoint[subject.grade] || 0;
           totalPoints += gradePoint * classData.credit;
           totalCredits += classData.credit;
@@ -55,23 +55,27 @@ export default function MyInfo() {
       });
     });
 
-    return totalCredits ? (totalPoints / totalCredits).toFixed(2) : null;
+    return totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : "0.00";
   };
 
   useEffect(() => {
     if (!id) {
       alert("로그인을 해주세요.");
       navigate("/login");
-    }else{
+    } else {
       const fetchData = async () => {
         try {
           const [studentResponse, classResponse] = await Promise.all([
             axios.get(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/${id}`),
             axios.get("https://672818a9270bd0b975544f0f.mockapi.io/api/v1/class"),
           ]);
-          setUserInfo(studentResponse.data);
+          const studentData = studentResponse.data;
+
+          setUserInfo(studentData);
           setClasses(classResponse.data);
-          const calculatedGpa = calculateGPA(studentResponse.data);
+
+          // GPA 계산 후 상태 업데이트
+          const calculatedGpa = calculateGPA(studentData);
           setGpa(calculatedGpa);
         } catch (error) {
           console.error("Error:", error);
@@ -79,7 +83,7 @@ export default function MyInfo() {
       };
       fetchData();
     }
-  }, [{gpa}]);
+  }, [id]);
 
   if (!userInfo || !classes.length) {
     return <div className="text-center">Loading...</div>;
