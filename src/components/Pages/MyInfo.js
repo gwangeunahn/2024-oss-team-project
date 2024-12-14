@@ -21,6 +21,7 @@ export default function MyInfo() {
     "F": 0.0,
   };
 
+  // 탈퇴함수
   const userDelete = async () => {
     const isConfirmed = window.confirm("정말로 탈퇴하시겠습니까? 탈퇴 시 해당 정보가 완전히 삭제됩니다.");
     if (isConfirmed) {
@@ -29,12 +30,13 @@ export default function MyInfo() {
         alert("탈퇴되었습니다.");
         navigate("/");
       } catch (error) {
-        console.error("userDelete :", error);
+        console.error("userDelete error : ", error);
         alert("죄송합니다. 잠시 후 시도해주세요.");
       }
     }
   };
 
+  // 학점계산기
   const calculateGPA = (semesters) => {
     if (!classes.length) return null;
 
@@ -61,6 +63,7 @@ export default function MyInfo() {
     return gpaResult;
   };
 
+  // 정보 불러오기
   useEffect(() => {
     if (!id) {
       alert("로그인을 해주세요.");
@@ -99,13 +102,11 @@ export default function MyInfo() {
       <div className="col-md-7">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h3 className="mb-0">나의 정보</h3>
+
+        {/* 수정하기, 탈퇴하기 */}
           <div>
-            <a href={`/user/updateInfo/${id}`} className="nav-link d-inline-block me-3">
-              수정하기
-            </a>
-            <a className="nav-link d-inline-block" href="javascript:;" onClick={userDelete}>
-              탈퇴하기
-            </a>
+            <a href={`/user/updateInfo/${id}`} className="nav-link d-inline-block me-3"> 수정하기 </a>
+            <a className="nav-link d-inline-block" href="javascript:;" onClick={userDelete}> 탈퇴하기 </a>
           </div>
         </div>
 
