@@ -27,6 +27,9 @@
   .info{
     width: 100%;
   }
+  .gtable{
+    width: 100%;
+  }
   #banner{
     display : none;
   }

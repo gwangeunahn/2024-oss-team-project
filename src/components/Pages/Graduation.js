@@ -92,7 +92,7 @@ export default function Graduation() {
 
   return (
     <div className="container mt-5">
-      <div className="table-responsive col-10 mx-auto rounded-3">
+      <div className="graduationTable table-responsive col-10 mx-auto rounded-3">
         <table className="table table-bordered text-center">
           <thead className="bg-light">
             <tr>
