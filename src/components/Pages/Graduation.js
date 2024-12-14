@@ -68,11 +68,11 @@ export default function Graduation() {
               setCredits(calculatedCredits);
             })
             .catch((error) => {
-              console.error('Error fetching class data:', error);
+              console.error("useEffect error : ", error);
             });
         })
         .catch((error) => {
-          console.error('Error fetching student data:', error);
+          console.error("useEffect error : ", error);
         });
     }
   }, [id]);
@@ -86,7 +86,7 @@ export default function Graduation() {
         setClassDetails(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching class details:', error);
+        console.error('class data get error:', error);
       });
   };
 
