@@ -36,17 +36,21 @@ export default function MyInfo() {
   };
 
   const calculateGPA = (semesters) => {
+    console.log("GPA 계산 시작"); // 디버깅용
+    if (!classes.length) return null;
+
     let totalPoints = 0;
     let totalCredits = 0;
 
-    Object.entries(semesters).forEach(([key, semesterSubjects]) => {
+    Object.keys(semesters).forEach((key) => {
+      const semesterSubjects = semesters[key];
       if (!Array.isArray(semesterSubjects)) return;
 
       semesterSubjects.forEach((subject) => {
-        const cleanedSubjectName = subject.subject.replace(/\s/g, ""); // 공백 제거
-        const classData = classes.find((cls) => cls.name.replace(/\s/g, "") === cleanedSubjectName);
+        const subjectName = subject.subject.replace(/\s/g, ""); // 공백 제거
+        const classData = classes.find((cls) => cls.name.replace(/\s/g, "") === subjectName);
 
-        // 학점이 "P"인 경우 계산에서 제외
+        // 학점이 "P"인 경우 GPA 계산에서 제외
         if (classData && subject.grade !== "P") {
           const gradePoint = gradeToPoint[subject.grade] || 0;
           totalPoints += gradePoint * classData.credit;
@@ -55,7 +59,9 @@ export default function MyInfo() {
       });
     });
 
-    return totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : "0.00";
+    const gpaResult = totalCredits ? (totalPoints / totalCredits).toFixed(2) : null;
+    console.log("GPA 계산 완료:", gpaResult); // 디버깅용
+    return gpaResult;
   };
 
   useEffect(() => {
@@ -69,6 +75,7 @@ export default function MyInfo() {
             axios.get(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/${id}`),
             axios.get("https://672818a9270bd0b975544f0f.mockapi.io/api/v1/class"),
           ]);
+
           const studentData = studentResponse.data;
 
           setUserInfo(studentData);
@@ -78,12 +85,20 @@ export default function MyInfo() {
           const calculatedGpa = calculateGPA(studentData);
           setGpa(calculatedGpa);
         } catch (error) {
-          console.error("Error:", error);
+          console.error("Error fetching data:", error);
         }
       };
       fetchData();
     }
   }, [id]);
+
+  useEffect(() => {
+    if (userInfo && classes.length) {
+      console.log("GPA 재계산 중..."); // 디버깅용
+      const calculatedGpa = calculateGPA(userInfo);
+      setGpa(calculatedGpa);
+    }
+  }, [userInfo, classes]);
 
   if (!userInfo || !classes.length) {
     return <div className="text-center">Loading...</div>;
