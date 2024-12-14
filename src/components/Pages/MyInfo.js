@@ -25,7 +25,7 @@ export default function MyInfo() {
     const isConfirmed = window.confirm("정말로 탈퇴하시겠습니까? 탈퇴 시 해당 정보가 완전히 삭제됩니다.");
     if (isConfirmed) {
       try {
-        await axios.delete(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/${id}`);
+        await axios.delete(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/` + id);
         alert("탈퇴되었습니다.");
         navigate("/");
       } catch (error) {
@@ -36,7 +36,6 @@ export default function MyInfo() {
   };
 
   const calculateGPA = (semesters) => {
-    console.log("GPA 계산 시작"); // 디버깅용
     if (!classes.length) return null;
 
     let totalPoints = 0;
@@ -47,10 +46,9 @@ export default function MyInfo() {
       if (!Array.isArray(semesterSubjects)) return;
 
       semesterSubjects.forEach((subject) => {
-        const subjectName = subject.subject.replace(/\s/g, ""); // 공백 제거
+        const subjectName = subject.subject.replace(/\s/g, "");
         const classData = classes.find((cls) => cls.name.replace(/\s/g, "") === subjectName);
 
-        // 학점이 "P"인 경우 GPA 계산에서 제외
         if (classData && subject.grade !== "P") {
           const gradePoint = gradeToPoint[subject.grade] || 0;
           totalPoints += gradePoint * classData.credit;
@@ -60,7 +58,6 @@ export default function MyInfo() {
     });
 
     const gpaResult = totalCredits ? (totalPoints / totalCredits).toFixed(2) : null;
-    console.log("GPA 계산 완료:", gpaResult); // 디버깅용
     return gpaResult;
   };
 
@@ -72,7 +69,7 @@ export default function MyInfo() {
       const fetchData = async () => {
         try {
           const [studentResponse, classResponse] = await Promise.all([
-            axios.get(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/${id}`),
+            axios.get(`https://672c26ca1600dda5a9f76967.mockapi.io/api/v1/Students/`+ id),
             axios.get("https://672818a9270bd0b975544f0f.mockapi.io/api/v1/class"),
           ]);
 
@@ -81,7 +78,6 @@ export default function MyInfo() {
           setUserInfo(studentData);
           setClasses(classResponse.data);
 
-          // GPA 계산 후 상태 업데이트
           const calculatedGpa = calculateGPA(studentData);
           setGpa(calculatedGpa);
         } catch (error) {
@@ -90,15 +86,7 @@ export default function MyInfo() {
       };
       fetchData();
     }
-  }, [id]);
-
-  useEffect(() => {
-    if (userInfo && classes.length) {
-      console.log("GPA 재계산 중..."); // 디버깅용
-      const calculatedGpa = calculateGPA(userInfo);
-      setGpa(calculatedGpa);
-    }
-  }, [userInfo, classes]);
+  }, [id, userInfo, classes]);
 
   if (!userInfo || !classes.length) {
     return <div className="text-center">Loading...</div>;
@@ -137,7 +125,7 @@ export default function MyInfo() {
           </table>
         </div>
 
-        {/* 학기별 정보 */}
+        {/* 학기별 내 정보 */}
         <div className="accordion" id="semesterAccordion">
           {[1, 2, 3, 4].map((year) => (
             <div className="accordion-item mb-3" key={year}>
